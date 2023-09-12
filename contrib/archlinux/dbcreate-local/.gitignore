@@ -1,0 +1,6 @@
+/src/
+/pkg/
+/dbcreate/
+*.log
+*.pkg.*
+*.tar.*

@@ -1,0 +1,51 @@
+[build-system]
+requires = ["poetry-core>=1.1.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "dbcreate"
+version = "0.1.0"
+description = "Automated Database Creation for Django Supported Databases"
+authors = [
+    "Abdulazeez Sherif <abdoulazeezx@gmail.com>",
+]
+license = "Apache-2.0"
+
+[tool.poetry.dependencies]
+python = "~3.10"
+dataclass-wizard = "~=0.22"
+
+[tool.poetry.group.dev.dependencies]
+autopep8 = "*"
+mypy = "~=0.991"
+pdoc = "~=12.3"
+poethepoet = "~=0.22"
+pylint = "~=2.17"
+pytest = "*"
+
+[tool.poetry.scripts]
+dbcreate = "dbcreate.cli:run"
+
+[tool.poe]
+verbosity = -1
+
+[tool.poe.tasks]
+tasks.cmd = "poe -v"
+tasks.help = "List available tasks"
+doc.cmd = "pdoc dbcreate !dbcreate.settings"
+doc.help = "Browse documentation"
+hello.script = "dbcreate.cli:run"
+hello.help = "Run hello"
+linter.cmd = "pylint --enable-all-extensions dbcreate"
+linter.help = "Check for style violations"
+tests.cmd = "pytest"
+tests.help = "Run test suite"
+typecheck.cmd = "mypy"
+typecheck.help = "Run static type checker"
+
+[tool.pyright]
+reportUnsupportedDunderAll = "none"
+
+[tool.pytest.ini_options]
+testpaths = "tests"
+xfail_strict = true
