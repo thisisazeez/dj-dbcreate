@@ -1,20 +1,12 @@
 """The primary module in dbcreate."""
 
+# Imports
+import typer
+from enum import Enum
 
-def hello(name: str = 'world') -> str:
-    """Says hello to someone.
+app = typer.Typer()
 
-    :param `name`:
-        whom to greet.
-        If left empty, we greet the `world`.
+class Databases(str, Enum):
+    PostgreSQL = "PostgreSQL"
 
-    :raises ValueError:
-        if `name` is empty.
 
-    :return: a friendly Hello, addressed to `name`.
-    """
-
-    if not name:
-        raise ValueError('Name cannot be empty.')
-
-    return f'Hello, {name}!'
