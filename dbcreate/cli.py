@@ -14,5 +14,5 @@ def run(*args: str) -> None:
     #     print(f'Usage: {sys.argv[0]} …',
     #           file=sys.stderr)
     #     sys.exit(1)
-    print(db.hello(*combined_args[:1]))
+    # print(db.hello(*combined_args[:1]))
     # sys.exit(0)
