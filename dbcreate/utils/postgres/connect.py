@@ -1,12 +1,18 @@
-# """Code for connecting to postgres"""
-
 import psycopg2
+import typer
+from yaspin import yaspin
 from dbcreate.utils.checkpsql import check_postgres_installed
 
-def connect_to_postgres(user='postgres', password='password', host='localhost', port='5432'):
+app = typer.Typer()
+
+def connect_to_postgres(user='postgres', password='', host='localhost', port='5432'):
     if not check_postgres_installed():
         print("PostgreSQL is not installed on your system.")
         return None
+
+    if not password:
+        # password = typer.prompt("Enter the PostgreSQL password for the 'postgres' user: ")
+        password: str = typer.Option(..., prompt=True)
 
     try:
         conn = psycopg2.connect(
@@ -22,8 +28,14 @@ def connect_to_postgres(user='postgres', password='password', host='localhost', 
         print(f"Error connecting to PostgreSQL: {e}")
         return None
 
+@app.command()
+def connect():
+    with yaspin(text="Connecting to PostgreSQL...", color="yellow") as spinner:
+        connection = connect_to_postgres()
+        if connection:
+            spinner.success("✅ Connected to PostgreSQL with the default 'postgres' user.")
+        else:
+            spinner.fail("💥 Failed to connect to PostgreSQL.")
+
 if __name__ == "__main__":
-    # Replace 'your_password' with the actual password
-    connection = connect_to_postgres('postgres', 'password')
-    if connection:
-        print("Connected to PostgreSQL with the default 'postgres' user.")
+    app()
